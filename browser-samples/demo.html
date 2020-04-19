@@ -12,14 +12,14 @@
 // "rostopic echo /gps/fix"
 (()=>{
   let nh = ros.initNode("echo_gps");
-  let onData = (msg) => console.log(msg);
+  let onData = (msg) => console.log("I got a GPS msesage!", msg);
   nh.subscribe("/gps/fix", "sensor_msgs/NavSatFix", onData);
 })();
 
 // "rostopic echo /imu/data"
 (()=>{
   let nh = ros.initNode("echo_imu");
-  let onData = (msg) => console.log(msg);
+  let onData = (msg) => console.log("I got an IMU message!", msg);
   nh.subscribe("/imu/data", "sensor_msgs/Imu", onData);
 })();
 </script>
