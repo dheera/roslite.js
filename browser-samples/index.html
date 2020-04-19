@@ -2,26 +2,26 @@
 <html>
 <head>
 <title>Demo</title>
-  <link rel="stylesheet" type="text/css" href="demo.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" type="text/css" href="index.css"/>
   <script type="text/javascript" src="roslite.bundle.js"></script>
   <script type="text/javascript" src="imuNode.js"></script>
   <script type="text/javascript" src="gpsNode.js"></script>
 </head>
 <body>
 
-<div id="console"></div>
+<div id="imuDisplay">(waiting for message to /imu/data ...)</div>
+<div id="gpsDisplay">(waiting for message to /gps/fix ...)</div>
 
 <script>
+
 // "rostopic echo /gps/fix"
 (()=>{
   let nh = ros.initNode("echo_gps");
+  let gpsDisplay = document.getElementById('gpsDisplay');
   let onData = (msg) => {
     console.log("recevied gps message:", msg);
-    prettyMsg = JSON.stringify(msg, null, 2).replace("\n", "<br>").replace(" ", "&nbsp;");
-    document.getElementById("console").innerHTML +=
-      '<span style="color:#0080cc">I got a GPS message!</span><br>' +
-      '<span style="color:#ffffff">' + prettifyMsg(msg) + "</span><br><br>";
-    window.scrollTo(0,document.body.scrollHeight);
+    gpsDisplay.innerHTML = json2html(msg);
   };
   nh.subscribe("/gps/fix", "sensor_msgs/NavSatFix", onData);
 })();
@@ -29,19 +29,18 @@
 // "rostopic echo /imu/data"
 (()=>{
   let nh = ros.initNode("echo_imu");
+  let imuDisplay = document.getElementById('imuDisplay');
   let onData = (msg) => {
     console.log("recevied imu message:", msg);
-    document.getElementById("console").innerHTML +=
-      '<span style="color:#0080cc">I got a IMU message!</span><br>' +
-      '<span style="color:#ffffff">' + prettifyMsg(msg) + "</span><br><br>";
-    window.scrollTo(0,document.body.scrollHeight);
+    imuDisplay.innerHTML = json2html(msg);
   };
   nh.subscribe("/imu/data", "sensor_msgs/Imu", onData);
 })();
 
-let prettifyMsg = function(msg) {
+let json2html = function(msg) {
     return JSON.stringify(msg, null, 2).replace(/\n/sg, "<br>").replace(/ /sg, "&nbsp;");
 }
+
 </script>
 
 </body>

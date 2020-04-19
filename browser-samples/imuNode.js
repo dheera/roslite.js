@@ -10,17 +10,17 @@
   let msg = { "@type": "sensor_msgs/Imu" };
 
   let gyroscopeSensor = new Gyroscope({
-    frequency: 60,
+    frequency: 30,
     referenceFrame: "device"
   });
 
   let linearAccelerationSensor = new LinearAccelerationSensor({
-    frequency: 60,
+    frequency: 30,
     referenceFrame: "device"
   });
 
   let orientationSensor = new AbsoluteOrientationSensor({
-    frequency: 60,
+    frequency: 30,
     referenceFrame: "device"
   });
 

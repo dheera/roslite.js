@@ -33,7 +33,7 @@
         position.coords.accuracy ** 2
       ];
       msg.header = {
-        timestamp: msg.timestamp / 1000.0,
+        timestamp: position.timestamp / 1000.0,
         frame_id: "gps",
       };
       pub_gps_fix.publish(msg);
