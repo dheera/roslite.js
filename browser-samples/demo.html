@@ -2,26 +2,46 @@
 <html>
 <head>
 <title>Demo</title>
+  <link rel="stylesheet" type="text/css" href="demo.css"/>
   <script type="text/javascript" src="roslite.bundle.js"></script>
   <script type="text/javascript" src="imuNode.js"></script>
   <script type="text/javascript" src="gpsNode.js"></script>
 </head>
 <body>
 
+<div id="console"></div>
+
 <script>
 // "rostopic echo /gps/fix"
 (()=>{
   let nh = ros.initNode("echo_gps");
-  let onData = (msg) => console.log("I got a GPS msesage!", msg);
+  let onData = (msg) => {
+    console.log("recevied gps message:", msg);
+    prettyMsg = JSON.stringify(msg, null, 2).replace("\n", "<br>").replace(" ", "&nbsp;");
+    document.getElementById("console").innerHTML +=
+      '<span style="color:#0080cc">I got a GPS message!</span><br>' +
+      '<span style="color:#ffffff">' + prettifyMsg(msg) + "</span><br><br>";
+    window.scrollTo(0,document.body.scrollHeight);
+  };
   nh.subscribe("/gps/fix", "sensor_msgs/NavSatFix", onData);
 })();
 
 // "rostopic echo /imu/data"
 (()=>{
   let nh = ros.initNode("echo_imu");
-  let onData = (msg) => console.log("I got an IMU message!", msg);
+  let onData = (msg) => {
+    console.log("recevied imu message:", msg);
+    document.getElementById("console").innerHTML +=
+      '<span style="color:#0080cc">I got a IMU message!</span><br>' +
+      '<span style="color:#ffffff">' + prettifyMsg(msg) + "</span><br><br>";
+    window.scrollTo(0,document.body.scrollHeight);
+  };
   nh.subscribe("/imu/data", "sensor_msgs/Imu", onData);
 })();
+
+let prettifyMsg = function(msg) {
+    return JSON.stringify(msg, null, 2).replace(/\n/sg, "<br>").replace(/ /sg, "&nbsp;");
+}
 </script>
 
 </body>
