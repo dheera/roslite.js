@@ -4,15 +4,16 @@ Experiment for a "lite" version of ROS to run from nodejs or from within a brows
 
 # Demo
 
-## In-browser GPS/IMU demo
+## In-browser GPS/IMU node publisher/subscriber demo
 
 Open this on an Android phone with Chrome:
 https://dheera.github.io/roslite-demo/
 
-## Simple publisher/subscriber
+## Node.js simple publisher/subscriber
 
 ![screenshot](/screenshot.gif?raw=true "screenshot")
 
+```
 ros = require("./roslite.js");
 
 // node A
