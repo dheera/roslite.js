@@ -47,6 +47,10 @@
       z: orientationSensor.quaternion[2],
       w: orientationSensor.quaternion[3],
     };
+    msg.header = {
+      timestamp: orientationSensor.timestamp,
+      frame_id: "imu",
+    };
     pub_imu_data.publish(msg);
   });
 
